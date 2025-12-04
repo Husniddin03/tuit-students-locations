@@ -28,10 +28,9 @@ class DatabaseSeeder extends Seeder
             'role' => 'super_admin'
         ]);
 
+        $counter = 1;
         $ids = $this->IDs();
         $total = count($ids);
-
-        $count = 1;
 
         foreach ($ids as $id) {
 
@@ -49,7 +48,12 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
 
-            echo $total - $count . ", ";
+            // Loading ko'rinish
+            $bar = str_repeat('=', $counter);
+
+            echo "\rYuklanmoqda: [$bar" . str_repeat(' ', $total - $counter) . "] $counter/$total";
+
+            $counter++;
         }
 
         echo "\nTayyor!\n";
