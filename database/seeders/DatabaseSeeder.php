@@ -29,16 +29,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $ids = $this->IDs();
+        $total = count($ids);
+
+        $count = 1;
 
         foreach ($ids as $id) {
 
             $student = Student::factory()->create([
                 'student_id' => $id
-            ]);
-
-            StudentPassword::factory()->create([
-                'student_id' => $id,
-                'password' => Hash::make($id),
             ]);
 
             if (rand(0, 1)) {
@@ -51,6 +49,7 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
 
+            echo $total - $count . ", ";
         }
 
         echo "\nTayyor!\n";
