@@ -41,40 +41,36 @@ const dashboardCard04 = () => {
     dark: '#4B5563'
   };    
 
-  fetch('/json-data-feed?datatype=4')
+  // Fetch dormitory va rent ma'lumotlari
+  fetch('/api/dormitory-stats') // Bu route ni yarating
     .then(a => {
       return a.json();
     })
     .then(result => {
 
-      const dataset1 = result.data.slice(0, 6);
-      const dataset2 = result.data.slice(6);
+      // result struktura: { dormitory: [...], rent: [...] }
+      const dormitoryCount = result.dormitory.length;
+      const rentCount = result.rent.length;
 
       const chart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: result.labels.slice(0, 6),
+          labels: ['Dormitory', 'Rent'], // Ikki kategoriya
           datasets: [
-            // Light blue bars
+            // Dormitory - Light blue bars
             {
-              label: 'Direct',
-              data: dataset1,
-              // data: [
-              //     800, 1600, 900, 1300, 1950, 1700,
-              // ],
+              label: 'Dormitory',
+              data: [dormitoryCount, 0], // Faqat birinchi ustunda
               backgroundColor: getCssVariable('--color-sky-500'),
               hoverBackgroundColor: getCssVariable('--color-sky-600'),
               barPercentage: 0.7,
               categoryPercentage: 0.7,
               borderRadius: 4,
             },
-            // Blue bars
+            // Rent - Violet bars
             {
-              label: 'Indirect',
-              data: dataset2,
-              // data: [
-              //     4900, 2600, 5350, 4800, 5200, 4800,
-              // ],
+              label: 'Rent',
+              data: [0, rentCount], // Faqat ikkinchi ustunda
               backgroundColor: getCssVariable('--color-violet-500'),
               hoverBackgroundColor: getCssVariable('--color-violet-600'),
               barPercentage: 0.7,
@@ -107,14 +103,6 @@ const dashboardCard04 = () => {
               },              
             },
             x: {
-              type: 'time',
-              time: {
-                parser: 'MM-DD-YYYY',
-                unit: 'month',
-                displayFormats: {
-                  month: 'MMM YY',
-                },
-              },
               border: {
                 display: false,
               },              

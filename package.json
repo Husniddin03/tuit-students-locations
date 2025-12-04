@@ -32,5 +32,14 @@
         "flatpickr": "^4.6.13",
         "moment": "^2.30.1",
         "nprogress": "^0.2.0"
-    }
+    },
+    "name": "dormity",
+    "version": "1.0.0",
+    "description": "![Mosaic TailwindCSS template preview](https://github.com/cruip/laravel-tailwindcss-admin-dashboard-template/assets/2683512/68bf8c3d-6525-4565-b6f8-c81611b9c1eb)",
+    "main": "postcss.config.js",
+    "directories": {
+        "test": "tests"
+    },
+    "author": "",
+    "license": "ISC"
 }

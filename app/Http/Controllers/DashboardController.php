@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DataFeed;
+use App\Models\Student;
 
 class DashboardController extends Controller
 {
@@ -11,7 +12,9 @@ class DashboardController extends Controller
     {
         $dataFeed = new DataFeed();
 
-        return view('pages/dashboard/dashboard', compact('dataFeed'));
+        $students = Student::all();
+
+        return view('pages/dashboard/dashboard', compact('dataFeed', 'students'));
     }
 
     /**
