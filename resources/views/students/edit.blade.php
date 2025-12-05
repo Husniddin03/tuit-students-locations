@@ -10,13 +10,15 @@
                             class="px-4 py-5 bg-white dark:bg-gray-800 sm:p-6 shadow-sm sm:rounded-tl-md sm:rounded-tr-md">
                             <div class="grid grid-cols-6 gap-6">
                                 <!-- Student ID -->
-                                <div class="col-span-6 sm:col-span-4">
-                                    <label class="block text-sm font-medium mb-1" for="student_id">
-                                        Student ID
-                                    </label>
-                                    <input class="form-input w-full mt-1 block" id="student_id" name="student_id"
-                                        type="number" value="{{ old('student_id', $student->student_id) }}" required>
-                                </div>
+                                @auth
+                                    <div class="col-span-6 sm:col-span-4">
+                                        <label class="block text-sm font-medium mb-1" for="student_id">
+                                            Student ID
+                                        </label>
+                                        <input class="form-input w-full mt-1 block" id="student_id" name="student_id"
+                                            type="number" value="{{ old('student_id', $student->student_id) }}" required>
+                                    </div>
+                                @endauth
 
                                 <!-- First Name -->
                                 <div class="col-span-6 sm:col-span-2">

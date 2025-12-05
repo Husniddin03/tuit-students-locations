@@ -180,12 +180,12 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
 
         $request->validate([
-            'student_id' => 'required|integer|unique:students,student_id,' . $student->id,
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'faculty' => 'required|string',
-            'group' => 'required|string',
-            'living_type' => 'required|in:dormitory,rent',
+            'student_id' => 'sometimes|required|integer|unique:students,student_id,' . $student->id,
+            'first_name' => 'sometimes|required|string',
+            'last_name' => 'sometimes|required|string',
+            'faculty' => 'sometimes|required|string',
+            'group' => 'sometimes|required|string',
+            'living_type' => 'sometimes|required|in:dormitory,rent',
         ]);
 
         // Student ma'lumotlarini yangilash
