@@ -42,6 +42,9 @@
                                     <th class="p-2">
                                         <div class="font-semibold text-center">Holati</div>
                                     </th>
+                                    <th class="p-2">
+                                        <div class="font-semibold text-center">Sana</div>
+                                    </th>
                                 </tr>
                             </thead>
                             <!-- Table body -->
@@ -67,6 +70,9 @@
                                             @else
                                                 <div class="text-center text-green-500">Parol yangilangan</div>
                                             @endif
+                                        </td>
+                                        <td class="p-2">
+                                            <div class="text-center">{{ $student->updated_at }}</div>
                                         </td>
                                     </tr>
                                 @endforeach

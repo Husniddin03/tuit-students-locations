@@ -28,33 +28,33 @@ class DatabaseSeeder extends Seeder
             'role' => 'super_admin'
         ]);
 
-        // $counter = 1;
-        // $ids = $this->IDs();
-        // $total = count($ids);
+        $counter = 1;
+        $ids = $this->IDs();
+        $total = count($ids);
 
-        // foreach ($ids as $id) {
+        foreach ($ids as $id) {
 
-        //     $student = Student::factory()->create([
-        //         'student_id' => $id
-        //     ]);
+            $student = Student::factory()->create([
+                'student_id' => $id
+            ]);
 
-        //     if (rand(0, 1)) {
-        //         Dormitory::factory()->create([
-        //             'student_id' => $student->student_id,
-        //         ]);
-        //     } else {
-        //         Rent::factory()->create([
-        //             'student_id' => $student->student_id,
-        //         ]);
-        //     }
+            if (rand(0, 1)) {
+                Dormitory::factory()->create([
+                    'student_id' => $student->student_id,
+                ]);
+            } else {
+                Rent::factory()->create([
+                    'student_id' => $student->student_id,
+                ]);
+            }
 
-        //     // Loading ko'rinish
-        //     $bar = str_repeat('=', $counter);
+            // Loading ko'rinish
+            $bar = str_repeat('=', $counter);
 
-        //     echo "\rYuklanmoqda: [$bar" . str_repeat(' ', $total - $counter) . "] $counter/$total";
+            echo "\rYuklanmoqda: [$bar" . str_repeat(' ', $total - $counter) . "] $counter/$total";
 
-        //     $counter++;
-        // }
+            $counter++;
+        }
 
         echo "\nTayyor!\n";
     }

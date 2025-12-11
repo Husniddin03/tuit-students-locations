@@ -333,11 +333,17 @@ class StudentController extends Controller
                 'password' => 'required|string|confirmed'
             ]);
 
-            $student->student_password->update([
-                'password' => Hash::make(request('password')),
-            ]);
-
-            if ($student->forget) {
+            if ($student->student_password) {
+                $student->student_password->update([
+                    'password' => Hash::make(request('password')),
+                ]);
+            } else {
+                StudentPassword::create([
+                    'student_id' => $student->student_id,
+                    'password' => Hash::make(request('password')),
+                ]);
+            }
+            if ($student->forget && $student->forget->status == 0) {
                 $student->forget->update([
                     'status' => 1
                 ]);
@@ -402,13 +408,17 @@ class StudentController extends Controller
 
         $student = Student::where('student_id', request('student_id'))->first();
         if ($student) {
+            $forget = Forget::where('student_id', request('student_id'))->first();
+            if ($forget && $forget->status == 0) {
+                return redirect()->route('students.login')->with('error', 'Siz allaqachon xabar yuborgansiz, iltimos kuting.');
+            }
             Forget::create([
                 'student_id' => request('student_id'),
-                'messeng' => request('messeng')
+                'messeng' => request('messeng'),
             ]);
-            return back()->with('success', 'Xabar yuborildi');
+            return redirect()->route('students.login')->with('success', 'Xabar yuborildi')->with('send', true);
         }
-        return back()->with('error', 'Siz tizimda mavjud emassiz');
+        return redirect()->route('students.login')->with('error', 'Siz tizimda mavjud emassiz');
     }
 
     public function exportStudentsDormitory()

@@ -79,7 +79,6 @@ return new class extends Migration
             $table->id(); // in int primary key autoincrement
             $table->unsignedBigInteger('student_id')->unsigned();
             $table->string('password');
-            $table->string('status')->default(0);
             $table->timestamps();
         });
         
@@ -87,7 +86,7 @@ return new class extends Migration
             $table->id(); // in int primary key autoincrement
             $table->unsignedBigInteger('student_id')->unsigned();
             $table->string('messeng');
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

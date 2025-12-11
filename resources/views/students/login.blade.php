@@ -51,4 +51,12 @@
         </div>
     </form>
     <x-validation-errors class="mt-4" />
+
+    @if (session('send'))
+        <div class="fixed bottom-6 right-6 bg-green-500 text-white-500 rounded-lg shadow-lg z-50">
+            <div class="p-4">Xabar yuborildi</div>
+        </div>
+    @endif
+
+
 </x-authentication-layout>

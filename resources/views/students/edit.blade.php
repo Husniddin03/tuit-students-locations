@@ -11,7 +11,7 @@
                             <div class="grid grid-cols-6 gap-6">
                                 <!-- Student ID -->
                                 @auth
-                                    <div class="col-span-6 sm:col-span-4">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="student_id">
                                             Student ID
                                         </label>
@@ -53,7 +53,7 @@
                                 </div>
 
                                 <!-- Faculty -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="faculty">
                                         Fakultet
                                     </label>
@@ -62,7 +62,7 @@
                                 </div>
 
                                 <!-- Group -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="group">
                                         Guruh
                                     </label>
@@ -89,7 +89,7 @@
                                 </div>
 
                                 <!-- Father -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="father">
                                         Otasi
                                     </label>
@@ -98,7 +98,7 @@
                                 </div>
 
                                 <!-- Father Phone -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="father_phone">
                                         Otasining telefoni
                                     </label>
@@ -107,7 +107,7 @@
                                 </div>
 
                                 <!-- Mother -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="mather">
                                         Onasi
                                     </label>
@@ -116,7 +116,7 @@
                                 </div>
 
                                 <!-- Mother Phone -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="mather_phone">
                                         Onasining telefoni
                                     </label>
@@ -198,7 +198,7 @@
                                 <div id="dormitory_fields"
                                     style="display: {{ $student->dormitory ? 'contents' : 'none' }};"
                                     class="col-span-6 grid grid-cols-6 gap-6">
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="dormitory">
                                             Yotoqxona
                                         </label>
@@ -207,7 +207,7 @@
                                             value="{{ old('dormitory', $student->dormitory->dormitory ?? '') }}">
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="room">
                                             Xona raqami
                                         </label>
@@ -216,7 +216,7 @@
                                             value="{{ old('room', $student->dormitory->room ?? '') }}">
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="privileged">
                                             Imtiyoz (%)
                                         </label>
@@ -225,7 +225,7 @@
                                             value="{{ old('privileged', $student->dormitory->privileged ?? 0) }}">
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="dorm_amount">
                                             Summa
                                         </label>
@@ -278,7 +278,7 @@
                                     <input type="hidden" id="rent_longitude" name="rent_longitude"
                                         value="{{ old('rent_longitude', $student->rent->longitude ?? '') }}">
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="rent_type">
                                             Uy egasi sizga kim
                                         </label>
@@ -290,7 +290,7 @@
 
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="owner_name">
                                             Egasining ismi
                                         </label>
@@ -299,7 +299,7 @@
                                             value="{{ old('owner_name', $student->rent->owner_name ?? '') }}">
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="owner_phone">
                                             Egasining telefoni
                                         </label>
@@ -308,7 +308,7 @@
                                             value="{{ old('owner_phone', $student->rent->owner_phone ?? '') }}">
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="rent_type">
                                             Toifa turi
                                         </label>
@@ -320,7 +320,7 @@
 
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="contract">
                                             Shartnoma
                                         </label>
@@ -329,7 +329,7 @@
                                             value="{{ old('contract', $student->rent->contract ?? 0) }}">
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="rent_amount">
                                             Summa
                                         </label>
