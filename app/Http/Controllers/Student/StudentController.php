@@ -78,13 +78,28 @@ class StudentController extends Controller
         if (Auth::user()->role !== 'super_admin') {
             return back();
         }
-        $count = request('count') ?? 10;
+
+
+        $count = request('count', 10);
+        $type = request('type');
+
         if ($count == 'all') {
-            $count = Student::whereHas('rent')->count();
-        } else {
-            $count = request('count');
+            $query = Student::whereHas('rent');
+
+            if ($type) {
+                $query->whereHas('rent', function ($q) use ($type) {
+                    $q->where('type', $type);
+                });
+            }
+
+            $count = $query->count();
         }
-        $students = Student::whereHas('rent')
+
+        $students = Student::whereHas('rent', function ($q) use ($type) {
+            if ($type) {
+                $q->where('type', $type);
+            }
+        })
             ->with('rent')
             ->paginate($count);
 
@@ -123,6 +138,7 @@ class StudentController extends Controller
             'province' => $request->province,
             'region' => $request->region,
             'address' => $request->address,
+            'map_home' => $request->map_home,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'father_phone' => $request->father_phone,
@@ -144,6 +160,7 @@ class StudentController extends Controller
                 'province' => $request->rent_province,
                 'region' => $request->rent_region,
                 'address' => $request->rent_address,
+                'map_rent' => $request->map_rent,
                 'latitude' => $request->rent_latitude,
                 'longitude' => $request->rent_longitude,
                 'type' => $request->rent_type,
@@ -155,12 +172,8 @@ class StudentController extends Controller
             ]);
         }
 
-        StudentPassword::create([
-            'student_id' => $student->student_id,
-            'password' => Hash::make($student->student_id),
-        ]);
 
-        return redirect()->route('students.index')->with('success', 'Student muvaffaqiyatli yaratildi!');
+        return redirect()->route('students.show', $student->id)->with('success', 'Student muvaffaqiyatli yaratildi!');
     }
 
     public function show($id)
@@ -187,7 +200,13 @@ class StudentController extends Controller
             'group' => 'sometimes|required|string',
             'living_type' => 'sometimes|required|in:dormitory,rent',
         ]);
-
+        // Eski yashash ma'lumotlarini o'chirish
+        if ($student->dormitory) {
+            $student->dormitory->delete();
+        }
+        if ($student->rent) {
+            $student->rent->delete();
+        }
         // Student ma'lumotlarini yangilash
         $student->update([
             'student_id' => $request->student_id,
@@ -208,14 +227,6 @@ class StudentController extends Controller
             'father_phone' => $request->father_phone,
             'mather_phone' => $request->mather_phone,
         ]);
-
-        // Eski yashash ma'lumotlarini o'chirish
-        if ($student->dormitory) {
-            $student->dormitory->delete();
-        }
-        if ($student->rent) {
-            $student->rent->delete();
-        }
 
         // Yangi yashash turi bo'yicha ma'lumot saqlash
         if ($request->living_type === 'dormitory') {
@@ -243,7 +254,7 @@ class StudentController extends Controller
             ]);
         }
 
-        return redirect()->route('students.index')->with('success', 'Student muvaffaqiyatli yangilandi!');
+        return redirect()->route('students.show', $student->id)->with('success', 'Student muvaffaqiyatli yangilandi!');
     }
 
     public function destroy($id)
@@ -256,66 +267,131 @@ class StudentController extends Controller
         return redirect()->route('students.index')->with('success', 'Student o‘chirildi!');
     }
 
+
+
+
     public function login()
     {
         return view('students.login');
+    }
+
+    public function logout(Request $request, $id)
+    {
+        $request->session()->forget('student_id');
+        return redirect()->route('students.login')->with('success', 'Siz tizimdan chiqdingiz.');
     }
 
     public function check(Request $request)
     {
         $data = $request->validate([
             'student_id' => 'required|exists:students,student_id',
-            'password' => 'required|string'
+            'password' => 'nullable|string',
         ]);
 
-        $student = Student::where('student_id', request('student_id'))->first();
-        if ($student && Hash::check(request('password'), $student->student_password->password)) {
-            session(['student_id' => request('student_id')]);
-            return redirect()->route('students.show', $student->id);
-        } else {
-            return back();
+
+        $student = Student::where('student_id', $request->student_id)->first();
+
+        if (!$student) {
+            return redirect()->route('students.login')->with('error', 'Talaba topilmadi.');
         }
+
+        if ($request->filled('password')) {
+            // Talabaning paroli bormi?
+            if (!$student->student_password) {
+                return redirect()->route('students.login')->with('error', 'Sizda parol o\'rnatilmagan.');
+            }
+
+            // Parolni tekshirish
+            if (Hash::check($request->password, $student->student_password->password)) {
+                session(['student_id' => $request->student_id]);
+                return redirect()->route('students.show', $student->id)->with('success', 'Xush kelibsiz!');
+            } else {
+                return redirect()->route('students.login')->with('error', 'Noto\'g\'ri parol kiritildi.');
+            }
+        }
+
+        // Agar parol kiritilmagan bo'lsa
+        // Talabada parol bormi tekshirish
+        if ($student->student_password) {
+            // Parol so'rash sahifasini ko'rsatish
+            return view('students.login', [
+                'get_password' => true,
+                'student_id' => $request->student_id
+            ]);
+        }
+
+        // Parol yo'q bo'lsa to'g'ridan-to'g'ri kirish
+        session(['student_id' => $request->student_id]);
+        return redirect()->route('students.show', $student->id)->with('success', 'Xush kelibsiz!');
     }
 
     public function newPassword(Request $request, string $id)
     {
-        if (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin') {
+        $student = Student::find($id);
+        if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin')) {
             $request->validate([
                 'password' => 'required|string|confirmed'
             ]);
-            $student = Student::find($id);
 
             $student->student_password->update([
-                'password' => Hash::make(request('password'))
+                'password' => Hash::make(request('password')),
             ]);
 
+            if ($student->forget) {
+                $student->forget->update([
+                    'status' => 1
+                ]);
+            }
 
-            $student->forget->update([
-                'status' => true,
-            ]);
 
-            return redirect()->route('students.show', $student->id);
-        } else {
+            return redirect()->route('students.show', $student->id)->with('success', 'Parol muvaffaqiyatli o\'zgartirildi!');
+        } elseif ($student->student_password) {
             $request->validate([
                 'old_password' => 'required|string',
                 'password' => 'required|string|confirmed'
             ]);
-        }
-        $student = Student::find($id);
 
-        if ($student && Hash::check(request('password'), $student->student_password->password)) {
-            $student->student_password->update([
-                'password' => Hash::make(request('password'))
-            ]);
-            return redirect()->route('students.show', $student->id);
+            if ($student && Hash::check(request('old_password'), $student->student_password->password)) {
+                $student->student_password->update([
+                    'password' => Hash::make(request('password')),
+                ]);
+                if ($student->forget) {
+                    $student->forget->update([
+                        'status' => 1
+                    ]);
+                }
+                return redirect()->route('students.show', $student->id)->with('success', 'Parol muvaffaqiyatli o\'zgartirildi!');
+            } else {
+                return back();
+            }
         } else {
-            return back();
+            $request->validate([
+                'password' => 'required|string|confirmed',
+            ]);
+
+            StudentPassword::create([
+                'student_id' => $student->student_id,
+                'password' => Hash::make(request('password')),
+            ]);
+
+            if ($student->forget) {
+                $student->forget->update([
+                    'status' => 1
+                ]);
+            }
+
+            return redirect()->route('students.show', $student->id)->with('success', 'Parol muvaffaqiyatli o\'rnatildi!');
         }
     }
 
     public function forget()
     {
         return view('students.forget');
+    }
+    public function forgets()
+    {
+        $students = Forget::with('student')->get();
+        return view('students.forgets', compact('students'));
     }
     public function send(Request $request)
     {

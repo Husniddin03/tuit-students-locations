@@ -5,15 +5,19 @@
                 <div class="mt-5 md:mt-0 md:col-span-2">
                     <form method="POST" action="{{ route('students.store') }}">
                         @csrf
-                        <div class="px-4 py-5 bg-white dark:bg-gray-800 sm:p-6 shadow-sm sm:rounded-tl-md sm:rounded-tr-md">
+                        <div
+                            class="px-4 py-5 bg-white dark:bg-gray-800 sm:p-6 shadow-sm sm:rounded-tl-md sm:rounded-tr-md">
                             <div class="grid grid-cols-6 gap-6">
                                 <!-- Student ID -->
-                                <div class="col-span-6 sm:col-span-4">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="student_id">
                                         Student ID
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="student_id" name="student_id"
-                                        type="number" required>
+                                        value="{{ old('student_id') }}" type="number" required>
+                                    @error('student_id')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- First Name -->
@@ -22,7 +26,10 @@
                                         Ism
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="first_name" name="first_name"
-                                        type="text" required>
+                                        value="{{ old('first_name') }}" type="text" required>
+                                    @error('first_name')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Last Name -->
@@ -31,7 +38,10 @@
                                         Familiya
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="last_name" name="last_name"
-                                        type="text" required>
+                                        value="{{ old('last_name') }}" type="text" required>
+                                    @error('last_name')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Middle Name -->
@@ -40,25 +50,40 @@
                                         Otasining ismi
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="middle_name" name="middle_name"
-                                        type="text">
+                                        value="{{ old('middle_name') }}" type="text">
+                                    @error('middle_name')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
-                                <!-- Faculty -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="faculty">
                                         Fakultet
                                     </label>
-                                    <input class="form-input w-full mt-1 block" id="faculty" name="faculty"
-                                        type="text" required>
+                                    <select class="form-input w-full mt-1 block" id="faculty" name="faculty"
+                                        onchange="toggleLivingType()">
+                                        <option value="">Tanlang</option>
+                                        <option value="Kompyuter injiniringi"
+                                            {{ old('faculty') == 'Kompyuter injiniringi' ? 'selected' : '' }}>Kompyuter
+                                            injiniringi</option>
+                                        <option value="TTk" {{ old('faculty') == 'TTk' ? 'selected' : '' }}>TTk
+                                        </option>
+                                    </select>
+                                    @error('faculty')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Group -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="group">
                                         Guruh
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="group" name="group"
-                                        type="text" required>
+                                        value="{{ old('group') }}" type="text" required>
+                                    @error('group')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Phone -->
@@ -67,7 +92,10 @@
                                         Telefon
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="phone" name="phone"
-                                        type="tel">
+                                        value="{{ old('phone') }}" type="tel">
+                                    @error('phone')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Coach -->
@@ -76,43 +104,58 @@
                                         Murabbiy
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="coach" name="coach"
-                                        type="text">
+                                        value="{{ old('coach') }}" type="text">
+                                    @error('coach')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Father -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="father">
                                         Otasi
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="father" name="father"
-                                        type="text">
+                                        value="{{ old('father') }}" type="text">
+                                    @error('father')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Father Phone -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="father_phone">
                                         Otasining telefoni
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="father_phone" name="father_phone"
-                                        type="tel">
+                                        value="{{ old('father_phone') }}" type="tel">
+                                    @error('father_phone')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Mother -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="mather">
                                         Onasi
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="mather" name="mather"
-                                        type="text">
+                                        value="{{ old('mather') }}" type="text">
+                                    @error('mather')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Mother Phone -->
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-2">
                                     <label class="block text-sm font-medium mb-1" for="mather_phone">
                                         Onasining telefoni
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="mather_phone" name="mather_phone"
-                                        type="tel">
+                                        value="{{ old('mather_phone') }}" type="tel">
+                                    @error('mather_phone')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- DOIMIY MANZIL (Permanent Address) Section -->
@@ -126,7 +169,10 @@
                                         Viloyat
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="province" name="province"
-                                        type="text">
+                                        value="{{ old('province') }}" type="text">
+                                    @error('province')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Region -->
@@ -135,7 +181,10 @@
                                         Tuman
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="region" name="region"
-                                        type="text">
+                                        value="{{ old('region') }}" type="text">
+                                    @error('region')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Address -->
@@ -144,7 +193,21 @@
                                         Manzil
                                     </label>
                                     <input class="form-input w-full mt-1 block" id="address" name="address"
-                                        type="text">
+                                        value="{{ old('address') }}" type="text">
+                                    @error('address')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-2">
+                                    <label class="block text-sm font-medium mb-1" for="map_home">
+                                        Url manzil
+                                    </label>
+                                    <input class="form-input w-full mt-1 block" id="map_home" name="map_home"
+                                        value="{{ old('map_home') }}" type="url">
+                                    @error('map_home')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Permanent Address Map -->
@@ -156,10 +219,17 @@
                                 </div>
 
                                 <!-- Latitude (Hidden) -->
-                                <input type="hidden" id="latitude" name="latitude">
+                                <input type="hidden" id="latitude" name="latitude" value="{{ old('latitude') }}">
+                                @error('latitude')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
 
                                 <!-- Longitude (Hidden) -->
-                                <input type="hidden" id="longitude" name="longitude">
+                                <input type="hidden" id="longitude" name="longitude"
+                                    value="{{ old('longitude') }}">
+                                @error('longitude')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
 
                                 <!-- YASHASH TURI (Living Type) Section -->
                                 <div class="col-span-6">
@@ -171,144 +241,221 @@
                                     <label class="block text-sm font-medium mb-1">
                                         Yashash turi
                                     </label>
-                                    <select class="form-input w-full mt-1 block" id="living_type" name="living_type" onchange="toggleLivingType()">
+                                    <select class="form-input w-full mt-1 block" id="living_type" name="living_type"
+                                        onchange="toggleLivingType()">
                                         <option value="">Tanlang</option>
-                                        <option value="dormitory">Yotoqxona</option>
-                                        <option value="rent">Ijara</option>
+                                        <option value="dormitory"
+                                            {{ old('living_type') == 'dormitory' ? 'selected' : '' }}>Yotoqxona
+                                        </option>
+                                        <option value="rent" {{ old('living_type') == 'rent' ? 'selected' : '' }}>
+                                            Ijara</option>
                                     </select>
+                                    @error('living_type')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Dormitory Fields -->
-                                <div id="dormitory_fields" style="display: none;" class="col-span-6 grid grid-cols-6 gap-6">
-                                    <div class="col-span-6 sm:col-span-3">
+                                <div id="dormitory_fields" style="display: none;"
+                                    class="col-span-6 grid grid-cols-6 gap-6">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="dormitory">
                                             Yotoqxona
                                         </label>
                                         <input class="form-input w-full mt-1 block" id="dormitory" name="dormitory"
-                                            type="text">
+                                            value="{{ old('dormitory') }}" type="text">
+                                        @error('dormitory')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="room">
                                             Xona raqami
                                         </label>
                                         <input class="form-input w-full mt-1 block" id="room" name="room"
-                                            type="number">
+                                            value="{{ old('room') }}" type="number">
+                                        @error('room')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="privileged">
                                             Imtiyoz (%)
                                         </label>
                                         <input class="form-input w-full mt-1 block" id="privileged" name="privileged"
-                                            type="number" step="0.01" value="0">
+                                            value="{{ old('privileged', 0) }}" type="number" step="0.01">
+                                        @error('privileged')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="dorm_amount">
                                             Summa
                                         </label>
-                                        <input class="form-input w-full mt-1 block" id="dorm_amount" name="dorm_amount"
-                                            type="number" step="0.01" value="0">
+                                        <input class="form-input w-full mt-1 block" id="dorm_amount"
+                                            name="dorm_amount" value="{{ old('dorm_amount', 0) }}" type="number"
+                                            step="0.01">
+                                        @error('dorm_amount')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <!-- Rent Fields -->
-                                <div id="rent_fields" style="display: none;" class="col-span-6 grid grid-cols-6 gap-6">
+                                <div id="rent_fields" style="display: none;"
+                                    class="col-span-6 grid grid-cols-6 gap-6">
                                     <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="rent_province">
                                             Viloyat
                                         </label>
-                                        <input class="form-input w-full mt-1 block" id="rent_province" name="rent_province"
-                                            type="text">
+                                        <input class="form-input w-full mt-1 block" id="rent_province"
+                                            name="rent_province" value="{{ old('rent_province') }}" type="text">
+                                        @error('rent_province')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="rent_region">
                                             Tuman
                                         </label>
-                                        <input class="form-input w-full mt-1 block" id="rent_region" name="rent_region"
-                                            type="text">
+                                        <input class="form-input w-full mt-1 block" id="rent_region"
+                                            name="rent_region" value="{{ old('rent_region') }}" type="text">
+                                        @error('rent_region')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="rent_address">
                                             Manzil
                                         </label>
-                                        <input class="form-input w-full mt-1 block" id="rent_address" name="rent_address"
-                                            type="text">
+                                        <input class="form-input w-full mt-1 block" id="rent_address"
+                                            name="rent_address" value="{{ old('rent_address') }}" type="text">
+                                        @error('rent_address')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-2">
+                                        <label class="block text-sm font-medium mb-1" for="map_rent">
+                                            Url manzil
+                                        </label>
+                                        <input class="form-input w-full mt-1 block" id="map_rent" name="map_rent"
+                                            value="{{ old('map_rent') }}" type="url">
+                                        @error('map_rent')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div class="col-span-6">
                                         <label class="block text-sm font-medium mb-1">
                                             Xaritadan ijara manzilini tanlang
                                         </label>
-                                        <div id="rent_map" style="width: 100%; height: 400px; border-radius: 6px;"></div>
+                                        <div id="rent_map" style="width: 100%; height: 400px; border-radius: 6px;">
+                                        </div>
                                     </div>
 
-                                    <input type="hidden" id="rent_latitude" name="rent_latitude">
-                                    <input type="hidden" id="rent_longitude" name="rent_longitude">
+                                    <input type="hidden" id="rent_latitude" name="rent_latitude"
+                                        value="{{ old('rent_latitude') }}">
+                                    @error('rent_latitude')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <input type="hidden" id="rent_longitude" name="rent_longitude"
+                                        value="{{ old('rent_longitude') }}">
+                                    @error('rent_longitude')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
+
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="rent_type">
                                             Uy egasi sizga kim
                                         </label>
                                         <select class="form-input w-full mt-1 block" id="rent_type" name="rent_type">
-                                            <option value="owner">O'z uyi</option>
-                                            <option value="relative">Qrindosh</option>
-                                            <option value="rent">Begona</option>
+                                            <option value="owner"
+                                                {{ old('rent_type') == 'owner' ? 'selected' : '' }}>O'z uyi</option>
+                                            <option value="relative"
+                                                {{ old('rent_type') == 'relative' ? 'selected' : '' }}>Qrindosh
+                                            </option>
+                                            <option value="rent" {{ old('rent_type') == 'rent' ? 'selected' : '' }}>
+                                                Begona</option>
                                         </select>
-
+                                        @error('rent_type')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="owner_name">
                                             Egasining ismi
                                         </label>
                                         <input class="form-input w-full mt-1 block" id="owner_name" name="owner_name"
-                                            type="text">
+                                            value="{{ old('owner_name') }}" type="text">
+                                        @error('owner_name')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="owner_phone">
                                             Egasining telefoni
                                         </label>
-                                        <input class="form-input w-full mt-1 block" id="owner_phone" name="owner_phone"
-                                            type="tel">
+                                        <input class="form-input w-full mt-1 block" id="owner_phone"
+                                            name="owner_phone" value="{{ old('owner_phone') }}" type="tel">
+                                        @error('owner_phone')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
-                                        <label class="block text-sm font-medium mb-1" for="rent_type">
+                                    <div class="col-span-6 sm:col-span-2">
+                                        <label class="block text-sm font-medium mb-1" for="category">
                                             Toifa turi
                                         </label>
-                                        <select class="form-input w-full mt-1 block" id="rent_type" name="category">
-                                            <option value="red">Qizil</option>
-                                            <option value="yellow">Sariq</option>
-                                            <option value="green">Yashil</option>
+                                        <select class="form-input w-full mt-1 block" id="category" name="category">
+                                            <option value="red" {{ old('category') == 'red' ? 'selected' : '' }}>
+                                                Qizil</option>
+                                            <option value="yellow"
+                                                {{ old('category') == 'yellow' ? 'selected' : '' }}>Sariq</option>
+                                            <option value="green" {{ old('category') == 'green' ? 'selected' : '' }}>
+                                                Yashil</option>
                                         </select>
-
+                                        @error('category')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="contract">
                                             Shartnoma
                                         </label>
                                         <input class="form-input w-full mt-1 block" id="contract" name="contract"
-                                            type="number" step="0.01" value="0">
+                                            value="{{ old('contract', 0) }}" type="number" step="0.01">
+                                        @error('contract')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-2">
                                         <label class="block text-sm font-medium mb-1" for="rent_amount">
                                             Summa
                                         </label>
-                                        <input class="form-input w-full mt-1 block" id="rent_amount" name="rent_amount"
-                                            type="number" step="0.01" value="0">
+                                        <input class="form-input w-full mt-1 block" id="rent_amount"
+                                            name="rent_amount" value="{{ old('rent_amount', 0) }}" type="number"
+                                            step="0.01">
+                                        @error('rent_amount')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-end px-4 py-3 bg-gray-50 dark:bg-gray-700/20 text-right sm:px-6 shadow-sm sm:rounded-bl-md sm:rounded-br-md">
+                        <div
+                            class="flex items-center justify-end px-4 py-3 bg-gray-50 dark:bg-gray-700/20 text-right sm:px-6 shadow-sm sm:rounded-bl-md sm:rounded-br-md">
                             <button type="submit"
                                 class="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white whitespace-nowrap">
                                 Saqlash
@@ -327,17 +474,24 @@
     </div>
 
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAM-lcwS2aMgdJd5AMxE8N_1Lu7M3aHJUw&callback=initMap"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAM-lcwS2aMgdJd5AMxE8N_1Lu7M3aHJUw&callback=initMap&libraries=places">
+    </script>
 
     <script>
         let map, rentMap;
         let marker, rentMarker;
+        let geocoder;
 
         function initMap() {
             // Default location (Tashkent)
-            const defaultLocation = { lat: 41.2995, lng: 69.2401 };
+            const defaultLocation = {
+                lat: 41.2995,
+                lng: 69.2401
+            };
 
-            // Permanent address map
+            geocoder = new google.maps.Geocoder();
+
+            // Dormitory (main) map
             map = new google.maps.Map(document.getElementById("map"), {
                 center: defaultLocation,
                 zoom: 12,
@@ -350,14 +504,18 @@
             });
 
             google.maps.event.addListener(map, 'click', function(event) {
-                placeMarker(event.latLng, marker, map, 'latitude', 'longitude');
+                placeMarker(event.latLng, marker, map,
+                    'latitude', 'longitude',
+                    'address', 'map_home'
+                );
             });
 
             google.maps.event.addListener(marker, 'dragend', function(event) {
                 updatePosition(event.latLng, 'latitude', 'longitude');
+                autoFillAddress(event.latLng, 'address', 'map_home');
             });
 
-            // Rent map (initialize but keep hidden)
+            // Rent map
             rentMap = new google.maps.Map(document.getElementById("rent_map"), {
                 center: defaultLocation,
                 zoom: 12,
@@ -370,25 +528,52 @@
             });
 
             google.maps.event.addListener(rentMap, 'click', function(event) {
-                placeMarker(event.latLng, rentMarker, rentMap, 'rent_latitude', 'rent_longitude');
+                placeMarker(event.latLng, rentMarker, rentMap,
+                    'rent_latitude', 'rent_longitude',
+                    'rent_address', 'map_rent'
+                );
             });
 
             google.maps.event.addListener(rentMarker, 'dragend', function(event) {
                 updatePosition(event.latLng, 'rent_latitude', 'rent_longitude');
+                autoFillAddress(event.latLng, 'rent_address', 'map_rent');
             });
         }
 
-        function placeMarker(location, markerObj, mapObj, latId, lngId) {
+        // 📌 Marker qo‘yish + formni to‘ldirish
+        function placeMarker(location, markerObj, mapObj, latId, lngId, addressId, urlId) {
             markerObj.setPosition(location);
             mapObj.panTo(location);
+
             updatePosition(location, latId, lngId);
+            autoFillAddress(location, addressId, urlId);
         }
 
+        // 📌 Latitude va longitude ni inputga yozish
         function updatePosition(location, latId, lngId) {
             document.getElementById(latId).value = location.lat();
             document.getElementById(lngId).value = location.lng();
         }
 
+        // 📌 Teskari geocoding (address + map url)
+        function autoFillAddress(location, addressId, urlId) {
+            geocoder.geocode({
+                location: location
+            }, function(results, status) {
+                if (status === "OK" && results[0]) {
+                    document.getElementById(addressId).value = results[0].formatted_address;
+
+                    // Google Maps URL yaratish
+                    let lat = location.lat();
+                    let lng = location.lng();
+                    let mapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+
+                    document.getElementById(urlId).value = mapUrl;
+                }
+            });
+        }
+
+        // 📌 Living type toggle
         function toggleLivingType() {
             const livingType = document.getElementById('living_type').value;
             const dormitoryFields = document.getElementById('dormitory_fields');
@@ -400,7 +585,7 @@
             } else if (livingType === 'rent') {
                 dormitoryFields.style.display = 'none';
                 rentFields.style.display = 'contents';
-                // Resize rent map when it becomes visible
+
                 setTimeout(function() {
                     google.maps.event.trigger(rentMap, 'resize');
                     rentMap.setCenter(rentMarker.getPosition());
@@ -411,4 +596,5 @@
             }
         }
     </script>
+
 </x-app-layout>

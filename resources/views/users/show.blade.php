@@ -15,21 +15,29 @@
         {{-- Back button --}}
         <div class="text-right flex">
             <div>
-                <a href="{{ route('users.index') }}" class="btn px-4 py-2 rounded text-black bg-gray-600 ">
-                    Orqaga
-                </a>
+                @auth
+                    @if (Auth::user()->role === 'super_admin')
+                        <a href="{{ route('users.index') }}" class="btn px-4 py-2 rounded text-black bg-gray-300 ">
+                            Orqaga
+                        </a>
+                    @endif
+                @endauth
                 <a href="{{ route('users.edit', $user->id) }}" class="btn px-4 py-2 rounded text-black bg-green-600 ">
                     Taxrirlash
                 </a>
             </div>
-            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="mx-1"
-                onsubmit="return confirm('Rostdan {{ $user->name }} talabani o‘chirilsinmi?');">
-                @csrf
-                <input type="hidden" name="_method" id="" value="DELETE">
-                <button type="submit" class="btn px-4 py-2 rounded text-black bg-red-600 ">
-                    O'chirish
-                </button>
-            </form>
+            @auth
+                @if (Auth::user()->id != $user->id)
+                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="mx-1"
+                        onsubmit="return confirm('Rostdan {{ $user->name }} talabani o‘chirilsinmi?');">
+                        @csrf
+                        <input type="hidden" name="_method" id="" value="DELETE">
+                        <button type="submit" class="btn px-4 py-2 rounded text-black bg-red-600 ">
+                            O'chirish
+                        </button>
+                    </form>
+                @endif
+            @endauth
         </div>
 
     </div>

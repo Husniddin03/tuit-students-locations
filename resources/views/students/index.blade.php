@@ -18,7 +18,7 @@
 
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                <a href="{{ request()->fullUrlWithQuery(['download'=>'search']) }}"
+                <a href="{{ request()->fullUrlWithQuery(['download' => 'search']) }}"
                     class="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">
                     <svg class="fill-current shrink-0 xs:hidden" width="16" height="16" viewBox="0 0 16 16">
                         <path
@@ -126,7 +126,7 @@
                                                 @if ($student->dormitory)
                                                     Yotoqxona
                                                 @else
-                                                    Ijara
+                                                    <a href="{{ $student->rent->map_rent ?? '#' }}" target="_blank">Ijara</a>
                                                 @endif
                                             </div>
                                         </td>

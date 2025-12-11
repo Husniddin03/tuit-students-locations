@@ -14,6 +14,7 @@ class Rent extends Model
         'province',
         'region',
         'address',
+        'map_rent',
         'latitude',
         'longitude',
         'owner_name',

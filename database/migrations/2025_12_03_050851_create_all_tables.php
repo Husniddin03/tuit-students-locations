@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('province')->nullable();
             $table->string('region')->nullable();
             $table->string('address')->nullable();
+            $table->string('map_home')->nullable();
             $table->float('latitude')->nullable();
             $table->float('longitude')->nullable();
             $table->string('father_phone')->nullable();
@@ -57,6 +58,7 @@ return new class extends Migration
             $table->string('province')->nullable();
             $table->string('region')->nullable();
             $table->string('address')->nullable();
+            $table->string('map_rent')->nullable();
             $table->float('latitude')->nullable();
             $table->float('longitude')->nullable();
             $table->string('type')->nullable();
@@ -77,6 +79,7 @@ return new class extends Migration
             $table->id(); // in int primary key autoincrement
             $table->unsignedBigInteger('student_id')->unsigned();
             $table->string('password');
+            $table->string('status')->default(0);
             $table->timestamps();
         });
         

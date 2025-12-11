@@ -58,6 +58,32 @@
                 {{ $slot }}
             </main>
 
+            <div class="fixed bottom-6 right-6 {{$alertType}} rounded-lg shadow-lg z-50">
+                <div class="p-4">{{$alertMessage}}</div>
+            </div>
+
+            <style>
+                .{{$alertType}} {
+                    @if ($alertType == 'success')
+                        background-color: green;
+                    @elseif ($alertType == 'error')
+                        background-color: red;
+                    @elseif ($alertType == 'info')
+                        background-color: yellow;
+                    @endif
+                    color: white;
+                    animation: fadeOut 0.5s ease-in-out 2.5s forwards;
+                }
+
+                @keyframes fadeOut {
+                    to {
+                        opacity: 0;
+                        visibility: hidden;
+                    }
+                }
+            </style>
+            
+
         </div>
 
     </div>

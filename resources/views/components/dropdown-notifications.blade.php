@@ -35,7 +35,13 @@
                         @focus="open = true" @focusout="open = false">
                         <span class="block text-sm mb-2">
                             <span
-                                class="font-medium text-gray-800 dark:text-gray-100">{{ $messeng->student->first_name }}
+                                class="font-medium text-gray-800 dark:text-gray-100">{{ $messeng->student->first_name." ".$messeng->student->last_name }}
+                            </span>
+
+                        </span>
+                        <span class="block text-sm mb-2">
+                            <span
+                                class="font-medium text-gray-800 dark:text-gray-100">{{ $messeng->student->student_id }}
                             </span>
 
                         </span>

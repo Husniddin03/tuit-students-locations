@@ -43,6 +43,9 @@
                 <header class="px-5 py-4 border-b flex border-gray-100 dark:border-gray-700/60">
                     <h2 class="font-semibold text-gray-800 w-full dark:text-gray-100">Talabalar ro'yxati</h2>
                     <form method="GET" class="flex">
+                        @if (request('type'))
+                            <input type="hidden" name="type" value="{{ request('type') }}">
+                        @endif
                         <label for="count">Talabalar soni</label>
                         <select name="count" id="count" class="form-input w-20" onchange="this.form.submit()">
                             @for ($i = 10; $i <= 100; $i += 10)

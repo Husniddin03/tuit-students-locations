@@ -105,7 +105,55 @@
                                     <path d="M15 7a5 5 0 1 0-4 9l-2 2v3h3v-2l2-2a5 5 0 0 0 1-10Z" />
                                 </svg>
 
-                                <span class="text-sm font-medium ml-4">Ijara</span>
+                                <span class="text-sm font-medium ml-4">Barcha ijaradagi talabalr</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0">
+                        <a class="block text-gray-800 dark:text-gray-100 truncate transition"
+                            href="{{ route('students.rent', ['type' => 'owner']) }}">
+                            <div class="flex items-center">
+                                {{-- Key icon --}}
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="shrink-0 w-5 h-5 text-gray-400 dark:text-gray-500" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 7a5 5 0 1 0-4 9l-2 2v3h3v-2l2-2a5 5 0 0 0 1-10Z" />
+                                </svg>
+
+                                <span class="text-sm font-medium ml-4">O'z uyidagi</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0">
+                        <a class="block text-gray-800 dark:text-gray-100 truncate transition"
+                            href="{{ route('students.rent', ['type' => 'relative']) }}">
+                            <div class="flex items-center">
+                                {{-- Key icon --}}
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="shrink-0 w-5 h-5 text-gray-400 dark:text-gray-500" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 7a5 5 0 1 0-4 9l-2 2v3h3v-2l2-2a5 5 0 0 0 1-10Z" />
+                                </svg>
+
+                                <span class="text-sm font-medium ml-4">Qarindoshinikida</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0">
+                        <a class="block text-gray-800 dark:text-gray-100 truncate transition"
+                            href="{{ route('students.rent', ['type' => 'rent']) }}">
+                            <div class="flex items-center">
+                                {{-- Key icon --}}
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="shrink-0 w-5 h-5 text-gray-400 dark:text-gray-500" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 7a5 5 0 1 0-4 9l-2 2v3h3v-2l2-2a5 5 0 0 0 1-10Z" />
+                                </svg>
+
+                                <span class="text-sm font-medium ml-4">Begonanikida</span>
                             </div>
                         </a>
                     </li>
@@ -113,6 +161,21 @@
                     {{-- Adminlar --}}
                     @auth
                         @if (Auth::user()->role == 'super_admin')
+                            <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0">
+                                <a class="block text-gray-800 dark:text-gray-100 truncate transition"
+                                    href="{{ route('students.forgets') }}">
+                                    <div class="flex items-center">
+                                        {{-- Key icon --}}
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="shrink-0 w-5 h-5 text-gray-400 dark:text-gray-500" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path d="M15 7a5 5 0 1 0-4 9l-2 2v3h3v-2l2-2a5 5 0 0 0 1-10Z" />
+                                        </svg>
+
+                                        <span class="text-sm font-medium ml-4">Parolni unutganlar</span>
+                                    </div>
+                                </a>
+                            </li>
                             <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0">
                                 <a class="block text-gray-800 dark:text-gray-100 truncate transition"
                                     href="{{ route('users.index') }}">

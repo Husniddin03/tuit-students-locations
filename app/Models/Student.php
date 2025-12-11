@@ -25,6 +25,7 @@ class Student extends Model
         'address',
         'father_phone',
         'mather_phone',
+        'map_home',
         'latitude',
         'longitude',
     ];

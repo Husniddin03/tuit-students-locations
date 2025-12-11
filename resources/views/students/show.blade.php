@@ -19,6 +19,8 @@
                 <div><strong>Viloyat:</strong> {{ $student->province ?? '-' }}</div>
                 <div><strong>Tuman:</strong> {{ $student->region ?? '-' }}</div>
                 <div><strong>Manzil:</strong> {{ $student->address ?? '-' }}</div>
+                <div><strong>Url manzil:</strong> <a class="text-blue-500"
+                        href="{{ $student->map_home ?? '#' }}">{{ $student->map_home }}</a></div>
                 <div><strong>Otasining telefoni:</strong> {{ $student->father_phone ?? '-' }}</div>
                 <div><strong>Onasining telefoni:</strong> {{ $student->mather_phone ?? '-' }}</div>
             </div>
@@ -43,11 +45,30 @@
             <div class=" shadow p-6 rounded">
                 <h2 class="text-2xl font-semibold mb-6">Ijara Ma'lumotlari</h2>
 
+                @php
+                    $type = '';
+                    switch ($student->rent->type) {
+                        case 'owner':
+                            $type = 'Uy egasi';
+                            break;
+                        case 'relateive':
+                            $type = 'Qarindosh';
+                            break;
+
+                        default:
+                            $type = 'Begona';
+                            break;
+                    }
+                @endphp
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div><strong>Viloyat:</strong> {{ $student->rent->province ?? '-' }}</div>
                     <div><strong>Tuman:</strong> {{ $student->rent->region ?? '-' }}</div>
                     <div><strong>Manzil:</strong> {{ $student->rent->address ?? '-' }}</div>
+                    <div><strong>Url manzil:</strong> <a class="text-blue-500"
+                            href="{{ $student->rent->map_home ?? '#' }}">{{ $student->rent->map_rent }}</a></div>
                     <div><strong>Toifa:</strong> {{ $student->rent->category ?? '-' }}</div>
+                    <div><strong>Uy egasi sizga kim:</strong> {{ $type ?? '-' }}</div>
                     <div><strong>Uy egasi:</strong> {{ $student->rent->owner_name ?? '-' }}</div>
                     <div><strong>Uy egasi telefoni:</strong> {{ $student->rent->owner_phone ?? '-' }}</div>
                     <div><strong>Shartnoma summasi:</strong> {{ $student->rent->contract }}</div>
@@ -75,6 +96,16 @@
                     Taxrirlash
                 </a>
             </div>
+            @guest
+                <form action="{{ route('students.logout', $student->id) }}" method="POST">
+                    @csrf
+                    <div class="mx-2">
+                        <button type="submit" class="btn px-4 py-2 cursor-pointer rounded text-black bg-red-600 ">
+                            Chiqish
+                        </button>
+                    </div>
+                </form>
+            @endguest
             @auth
                 <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="mx-1"
                     onsubmit="return confirm('Rostdan {{ $student->first_name }} talabani o‘chirilsinmi?');">

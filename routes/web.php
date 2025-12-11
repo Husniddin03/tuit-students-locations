@@ -21,7 +21,9 @@ use App\Http\Controllers\UserController;
 Route::redirect('/', 'login');
 
 Route::get('students/login', [StudentController::class, 'login'])->name('students.login');
+Route::post('students/logout/{id}', [StudentController::class, 'logout'])->name('students.logout');
 Route::get('students/forget', [StudentController::class, 'forget'])->name('students.forget');
+Route::get('students/forgets', [StudentController::class, 'forgets'])->name('students.forgets');
 Route::post('students/send', [StudentController::class, 'send'])->name('students.send');
 Route::post('students/check', [StudentController::class, 'check'])->name('students.check');
 Route::post('students/newPassword/{id}', [StudentController::class, 'newPassword'])->name('students.newPassword');

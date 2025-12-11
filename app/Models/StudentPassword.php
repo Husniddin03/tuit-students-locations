@@ -12,7 +12,7 @@ class StudentPassword extends Model
 
     protected $fillable = [
         'student_id',
-        'password'
+        'password',
     ];
 
    public function student()

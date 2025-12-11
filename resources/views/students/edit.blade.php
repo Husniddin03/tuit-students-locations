@@ -19,6 +19,11 @@
                                             type="number" value="{{ old('student_id', $student->student_id) }}" required>
                                     </div>
                                 @endauth
+                                @guest
+                                    <input class="form-input w-full mt-1 block" id="student_id" name="student_id"
+                                        type="hidden" value="{{ old('student_id', $student->student_id) }}" required>
+
+                                @endguest
 
                                 <!-- First Name -->
                                 <div class="col-span-6 sm:col-span-2">
@@ -353,13 +358,15 @@
                             class="px-4 py-5 bg-white dark:bg-gray-800 sm:p-6 shadow-sm sm:rounded-tl-md sm:rounded-tr-md">
                             <div class="grid grid-cols-6 gap-6">
                                 @guest
-                                    <div class="col-span-6 sm:col-span-2">
-                                        <label class="block text-sm font-medium mb-1" for="old_password">
-                                            Joriy parol
-                                        </label>
-                                        <input class="form-input w-full mt-1 block" id="old_password" name="old_password"
-                                            type="password" value="" required>
-                                    </div>
+                                    @if ($student->student_password)
+                                        <div class="col-span-6 sm:col-span-2">
+                                            <label class="block text-sm font-medium mb-1" for="old_password">
+                                                Joriy parol
+                                            </label>
+                                            <input class="form-input w-full mt-1 block" id="old_password"
+                                                name="old_password" type="password" value="" required>
+                                        </div>
+                                    @endif
                                 @endguest
 
                                 <!-- Middle Name -->

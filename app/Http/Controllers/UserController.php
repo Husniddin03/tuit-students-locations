@@ -17,7 +17,10 @@ class UserController extends Controller
             return back();
         }
         $count = request('count') ?? 10;
-
+        if ($count == 'all') {
+            $count = User::count();
+        } 
+        
         $users = User::paginate($count);
         return view('users.index', compact('users'));
     }
@@ -47,6 +50,8 @@ class UserController extends Controller
             'password' => 'required|string|confirmed',
             'role' => 'required|in:admin,super_admin'
         ]);
+
+        $data['password'] = bcrypt($data['password']);
 
         User::create($data);
         return redirect()->route('users.index');
@@ -92,8 +97,11 @@ class UserController extends Controller
         ]);
 
         $user = User::find($id);
+        if($data['password']){
+            $data['password'] = bcrypt($data['password']);
+        }
         $user->update($data);
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
     /**
